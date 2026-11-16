@@ -1,0 +1,82 @@
+% 2026 年新手数学建模竞赛试题（国赛风格题面）
+% 编译：xelatex 试题.tex （运行两遍）
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[top=2.4cm,bottom=2.4cm,left=2.4cm,right=2.4cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,bookmarks=true,unicode=true]{hyperref}
+\hypersetup{pdftitle={2026年新手数学建模竞赛 A题 乳酸发酵工艺的规律与优化},pdfauthor={2026年新手数学建模竞赛组委会},
+  pdfsubject={数学建模竞赛试题},pdfkeywords={数学建模,竞赛,试题},pdfcreator={LaTeX}}
+
+\setlength{\parskip}{0.35em}
+\widowpenalty=10000
+\clubpenalty=10000
+\setcounter{tocdepth}{2}
+
+% 题号与题名（每题另起一页）
+\newcommand{\prob}[2]{\clearpage\begin{center}{\zihao{3}\heiti #1\quad #2}\end{center}\vspace{-0.2em}}
+% 问题段：题号与题文同段
+\newcommand{\wenti}[1]{\par\vspace{0.55em}\noindent\textbf{#1}\quad}
+% 附件说明段
+\newcommand{\fujian}[1]{\par\vspace{0.55em}\noindent\textbf{#1}\quad}
+% 附录术语条目
+\newcommand{\shuyu}[2]{\item \textbf{#1}：#2}
+% 填空占位
+\newcommand{\kong}[1][1.2cm]{\underline{\hspace{#1}}}
+
+\begin{document}
+
+\begin{center}
+  {\zihao{2}\heiti 2026 年新手数学建模竞赛}\\[0.3em]
+  {\zihao{3}\heiti A 题\quad 乳酸发酵工艺的规律与优化}
+\end{center}
+\vspace{0.5em}
+\noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{
+\textbf{竞赛说明}（供组委会修改）：竞赛时间：\kong[1.1cm] 年 \kong[0.7cm] 月 \kong[0.7cm] 日 \kong[0.7cm] 时 至 \kong[0.7cm] 月 \kong[0.7cm] 日 \kong[0.7cm] 时（共 \kong[0.7cm] 小时）。参赛队从 A、B、C、D 四题中任选一题作答，提交一篇包含摘要、问题重述、模型假设、建模求解、结果分析与参考文献的论文。可使用计算机和各类软件，但不得与队外人员讨论。附件数据与示意图见“附件”与“图”文件夹。}}
+
+ =================
+
+乳酸是一种广泛用于食品、饮料与医药行业的原料。某生物制造企业的中试车间采用\textbf{分批发酵}方式生产食品级乳酸：在发酵罐中一次性投入培养基（主要碳源为葡萄糖），接入乳酸菌后，菌体一边生长、一边消耗葡萄糖并产出乳酸；整个过程中不补加也不放出物料，罐内温度保持恒定，到达适当时间后整批放出（以下简称“放罐”）。发酵罐配有搅拌装置、水浴控温与取样口（见图 A）。
+
+企业积累了两组试验数据（附件 A）。\textbf{试验一}是标准配方（初始葡萄糖浓度 35 g/L）下一罐发酵的完整过程记录：从接种起每 2 小时取样一次，测定发酵液中菌体量（以活菌数的常用对数计）、乳酸浓度与残糖浓度，直至第 14 小时。\textbf{试验二}是更早前在不同初始葡萄糖浓度（20～150 g/L）下进行的一组对比试验，记录了每批的发酵终点时间、终点菌体量、终点乳酸浓度、终点残糖以及平均产酸速率等指标。需要说明的是，两组试验所用的菌株以及温度、pH 控制方式并不相同（详见附件“数据说明”），建模时应注意两组数据各自的适用范围。
+
+工艺人员希望弄清楚发酵过程的基本规律：菌体生长、产酸与耗糖之间存在怎样的定量联系？初始加糖量应如何选择？什么时候放罐最合算？
+
+\wenti{问题 1}针对试验一，建立菌体浓度随时间变化的数学模型，给出模型中参数的估计值，并评价模型与数据的吻合程度；据此估计本批发酵中菌体生长最快时的速率（以单位时间浓度对数的增加量刻画）与最终菌体量。
+
+\wenti{问题 2}在问题 1 的基础上，建立乳酸生成与葡萄糖消耗的数学模型，刻画“菌体生长—产酸—耗糖”三者的联动关系；给出模型参数（例如平均每消耗 1 g 葡萄糖伴随生成的乳酸量等）的估计，并分析模型对各时间点数据的拟合效果与可靠性。
+
+\wenti{问题 3}利用试验二的数据，分析初始葡萄糖浓度对发酵效果（终点产量、平均产酸速率、发酵时长、终点残糖等）的影响，建立适当的数学模型刻画“终点产量随初糖升高而增加、平均产酸速率却总体下降”的规律，并解释高糖（如 150 g/L）条件下残糖明显剩余的原因。若企业需要在产量、单位时间产出（生产强度）与设备周转之间权衡，请给出你推荐的初始加糖浓度与放罐时间，并说明理由。
+
+\wenti{问题 4}实际生产中还可考虑中途补加糖料、及时移出部分乳酸等改进手段。请选择其中一种策略，说明其思路，并用你的模型估计可能带来的效果；同时讨论所建模型的局限与适用范围。
+
+\begin{center}
+  \includegraphics[width=\textwidth]{图A_发酵装置与过程示意.png}
+\end{center}
+
+\fujian{附件 A 说明}附件A\_发酵实验数据.xlsx 含两个数据表：“发酵过程数据”（试验一）与\mbox{“初糖浓度对比”（试验二）}，试验条件与测定方法见其中“数据说明”表。
+
+\subsection*{\heiti 附录 A}
+\vspace{-0.4em}
+\noindent\textbf{术语解释}
+\begin{itemize}[leftmargin=2em,itemsep=0.12em,topsep=0.2em]
+  \shuyu{分批发酵}{一次性投入培养基、接种后不再添加或放出物料的发酵方式。}
+  \shuyu{菌体浓度}{发酵液中微生物的多少。试验一以“每毫升样品中活菌个数的常用对数”计量，记作 lg(CFU/mL)；CFU 表示可在培养基上长成菌落的活菌个数单位。试验二以 OD600（样品在 600 nm 光下的吸光度）计量，两种计量的数值不能直接比较。}
+  \shuyu{残糖浓度}{发酵液中剩余的葡萄糖浓度（g/L）。}
+  \shuyu{比生长速率}{单位时间内菌体浓度的相对增长速率；在以对数计量菌体时，可用单位时间内对数值的增量近似刻画。}
+  \shuyu{产酸速率（生产强度）}{单位发酵时间、单位体积发酵液中新产生的乳酸量，单位 g/(L·小时)。}
+  \shuyu{放罐}{一批发酵结束、整批放出物料的时间点。}
+  \shuyu{迟滞期、对数期、稳定期}{接种后菌体先后经历的环境适应段、快速增长段与增长趋缓段。}
+\end{itemize}
+
+\noindent\textbf{数学定义}：设 $\hat{y}_i$ 为模型对第 $i$ 个数据 $y_i$ 的预测值（$i=1,2,\dots,n$），$\bar{y}$ 为数据的平均值。
+\begin{itemize}[leftmargin=2em,itemsep=0.12em,topsep=0.2em]
+  \item \textbf{最小二乘法}：选取模型参数，使残差平方和 $\sum_{i=1}^{n}(y_i-\hat{y}_i)^2$ 最小。
+  \item \textbf{决定系数} $R^2 = 1-\dfrac{\sum_{i=1}^{n}(y_i-\hat{y}_i)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}$，越接近 1 表示拟合越好。
+  \item \textbf{平均相对误差} $= \dfrac{1}{n}\sum_{i=1}^{n}\left|\dfrac{y_i-\hat{y}_i}{y_i}\right|$（$y_i\neq 0$ 时）。
+\end{itemize}
+
+\end{document}

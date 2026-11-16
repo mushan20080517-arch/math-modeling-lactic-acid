@@ -1,0 +1,88 @@
+% ==========================================================
+\section{模型的评价与推广}
+
+\subsection{优点}
+\begin{enumerate}[leftmargin=2.2em,itemsep=0.12em]
+\item \wj{结构递进、彼此衔接。}问题 1 的输出是问题 2 的输入，问题 2 的机理是问题 3/4 的依据，四个模型共用同一套符号与同一套参数估计流程，避免了“四道题四个模型、互不相干”的常见问题。
+\item \wj{参数有物理意义。}$\mu_m$ 是比生长速率、$Y_{P/S}$ 是得率、$P_m$ 是效价上限、$K_i$ 是底物抑制常数，每个数都能与发酵学的概念对话，而不是纯经验拟合。
+\item \wj{检验充分。}同时报告了 $R^2$、RMSE、MAPE、AIC/BIC、留一交叉验证、残差结构、参数置信区间与外推检验，既说明“拟合得好”，也说明“为什么会好/会不好”。
+\item \wj{结论可解释且可检验。}$S_0^*=114.3$ g/L 与“150 g/L 时残糖 35.7 g/L 完全吻合”是一个可被数据直接检验的强预测；$P_m\approx9.9$ g/L 解释了试验一“剩 25 g/L 糖却停产”的反常现象。
+\item \wj{决策导向。}优化目标直接写成企业关心的“单位时间净收益”，并给出二维寻优图与成本敏感性，结论落在可执行的参数区间上。
+\end{enumerate}
+
+\subsection{不足}
+\begin{enumerate}[leftmargin=2.2em,itemsep=0.12em]
+\item \wj{数据量小、无重复。}试验一 8 个点、试验二 6 个水平且每个水平只有一批，无法估计批间变异，参数的置信区间普遍偏宽（如 $K_i$ 的标准误达其估计值的 $77\%$）。
+\item \wj{菌体子模型是外生的。}问题 2 中 $L(t)$ 由试验一直接给出，未让菌体对“产物移除”“补料”作出响应，因此问题 4 的收益估计偏保守。
+\item \wj{抑制形式为经验假设。}线性抑制 $(1-P/P_m)$ 在接近上限时过于“硬”，若改用 $K_i/(K_i+P)$ 或 Hill 形式，得到的 $P_m$ 会不同，但“存在天花板”这一定性结论不变。
+\item \wj{未刻画 pH。}试验一未控 pH，乳酸累积会同时通过“酸浓度”和“pH 下降”两条途径抑制，本文把两者合并进 $P_m$，无法分离。
+\item \wj{未考虑菌体死亡与自溶。}14 h 内活菌数基本稳定，故未加死亡项；若发酵时间更长（如 $>30$ h），需要引入衰减项 $\dd X/\dd t=\mu X-k_dX$。
+\end{enumerate}
+
+\subsection{改进方向}
+\begin{enumerate}[leftmargin=2.2em,itemsep=0.10em]
+\item 补充批间重复试验，用非线性混合效应模型（NLME）分离“批间随机效应”与“测量误差”，可显著收窄置信区间；
+\item 把 pH 作为独立状态量，用未解离乳酸浓度 $[\mathrm{HL}]$ 代替总酸 $P$ 作为抑制变量，可从机理上区分“酸毒性”与“pH 效应”；
+\item 引入菌体死亡/维持的能量分配模型（Pirt 方程），把 $m_s$ 与菌体年龄结构联系起来；
+\item 对问题 4 建立“发酵—分离”耦合的流程模型，把膜通量、树脂容量与再生周期纳入，做全流程的技术经济评价。
+\end{enumerate}
+
+\subsection{推广}
+本文的“对数增长 + Luedeking--Piret + 产物抑制”框架可直接推广到其他有机酸（柠檬酸、琥珀酸、衣康酸）与醇类（乙醇、丁醇）的分批/补料分批发酵；把 $\dd P/\dd t$ 换成“目标产物生成速率”、把 $(1-P/P_m)$ 换成相应的毒性函数即可。优化部分的 $(S_0,t)$ 二维寻优与成本敏感性分析方法，也适用于任何“原料—时间—效价”三者权衡的间歇过程。
+
+% ==========================================================
+\begin{thebibliography}{99}
+\small
+\bibitem{luo} 罗荣聪, 郑穗平. 发酵工程原理与技术[M]. 北京: 化学工业出版社, 2019.
+\bibitem{bailey} Bailey J E, Ollis D F. Biochemical Engineering Fundamentals[M]. 2nd ed. New York: McGraw-Hill, 1986.
+\bibitem{luedeking} Luedeking R, Piret E L. A kinetic study of the lactic acid fermentation[J]. Journal of Biochemical and Microbiological Technology and Engineering, 1959, 1(4): 393--412.
+\bibitem{zwetering} Zwietering M H, Jongenburger I, Rombouts F M, et al. Modeling of the bacterial growth curve[J]. Applied and Environmental Microbiology, 1990, 56(6): 1875--1881.
+\bibitem{richards} Richards F J. A flexible growth function for empirical use[J]. Journal of Experimental Botany, 1959, 10(2): 290--301.
+\bibitem{haldane} Andrews J F. A mathematical model for the continuous culture of microorganisms utilizing inhibitory substrates[J]. Biotechnology and Bioengineering, 1968, 10(6): 707--723.
+\bibitem{vazquez} Vázquez J A, Murado M A. Mathematical tools for objective comparison of microbial cultures[J]. Biochemical Engineering Journal, 2008, 39(2): 276--287.
+\bibitem{datta} Datta R, Henry M. Lactic acid: recent advances in products, processes and technologies[J]. Journal of Chemical Technology \& Biotechnology, 2006, 81(7): 1119--1129.
+\bibitem{abdel} Abdel-Rahman M A, Tashiro Y, Sonomoto K. Recent advances in lactic acid production by microbial fermentation processes[J]. Biotechnology Advances, 2013, 31(6): 877--902.
+\bibitem{efron} Efron B, Tibshirani R J. An Introduction to the Bootstrap[M]. New York: Chapman \& Hall, 1993.
+\bibitem{akaike} Akaike H. A new look at the statistical model identification[J]. IEEE Transactions on Automatic Control, 1974, 19(6): 716--723.
+\bibitem{jones} Jones D E, Smith H L. The measurement and analysis of microbial growth[J]. Microbiology, 1979.
+\end{thebibliography}
+
+\newpage
+\appendix
+\section*{附录：核心代码}
+\addcontentsline{toc}{section}{附录：核心代码}
+
+全部代码（数据读取、模型拟合、绘图、优化）见随论文提交的 \texttt{code/} 目录，运行 \texttt{python main.py} 即可复现本文全部数值与图形。核心模型的实现如下（节选）：
+
+\begin{verbatim}
+# ---- Q1: Logistic growth fitted by non-linear least squares ----
+def f_logistic(p, t):
+    L0, A, k, tm = p
+    return L0 + A / (1.0 + np.exp(-k * (t - tm)))
+
+res = least_squares(lambda p: f_logistic(p, t) - L, p0,
+                    bounds=(lb, ub), method="trf")
+
+# ---- Q2: Luedeking-Piret coupled ODE with product inhibition ----
+def rhs(t, y):
+    P, S = y
+    f = max(1.0 - P / Pm, 0.0)
+    X = 10.0 ** (Lof(t) - L0)
+    dP = max(alpha * dLof(t) + beta * X, 0.0) * f
+    dS = -dP / Yps - ms
+    return [dP, dS]
+
+# ---- Q3: substrate + product inhibited kinetics ----
+def rate(th, S0, P):
+    Vmax, Ks, Ki, Pcap, Y = th[:5]
+    S = S0 - P / Y
+    if S <= 0:
+        return 0.0
+    return Vmax * S / (Ks + S + S * S / Ki) * max(1 - P / Pcap, 0.0)
+
+# endpoint: solve rate(P) = v_stop, then t = integral dP/rate(P)
+\end{verbatim}
+
+\noindent\textbf{复现说明}：环境为 Python 3.12 + NumPy + SciPy + Matplotlib；\texttt{results/} 下保存全部数值结果（JSON），\texttt{figures/} 下保存全部插图；\texttt{code/main.py} 按 问题 1 $\to$ 问题 2 $\to$ 问题 3 $\to$ 问题 4 $\to$ 绘图 的顺序一键运行。
+
+\end{document}
