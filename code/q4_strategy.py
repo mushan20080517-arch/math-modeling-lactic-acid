@@ -171,17 +171,22 @@ print(f"   对比：150 g/L 分批 → P={q3['opt']['P']['P']:.1f} g/L, t={q3['o
 print(f"\n   若按 150 g/L 总糖补料（不浪费）：理论上限 P={Y*150:.1f} g/L，"
       f"但受上限 Pcap={Pcap:.1f} 限制，实际仍是 {Pcap:.1f} g/L")
 
+def thin(a, step):
+    a = np.asarray(a)
+    return a[::step].tolist() + [a[-1].tolist()]
+
+
 C.json_dump(dict(
     params=dict(alpha=alpha, beta=beta, Pm=Pm, Yps=Yps, ms=ms, L0=L_LOW),
-    batch=dict(t=tb.tolist(), P=Pb.tolist(), S=Sb.tolist(),
+    batch=dict(t=thin(tb, 25), P=thin(Pb, 25), S=thin(Sb, 25),
                P14=float(Pb[i14]), S14=float(Sb[i14]),
                P28=float(Pb[-1]), S28=float(Sb[-1])),
     ispr=[dict(Psp=r["Psp"], total=r["total"], removed=r["removed"], t=r["t"],
                S_end=r["S_end"], rho=r["rho"], gain=r["gain"],
-               traj=r["traj"].tolist()) for r in rows],
+               traj=thin(r["traj"], 100)) for r in rows],
     fed_batch=dict(t=fb["t"], V=fb["V"], S=fb["S"], P=fb["P"], fed=fb["fed"],
                    total=fb["total_sugar"], mass=fb["mass"], rho=fb["rho"],
-                   traj=fb["traj"].tolist()),
+                   traj=thin(fb["traj"], 20)),
     P_limit=float(P_lim),
 ), "q4_results.json")
 print("\n已保存 results/q4_results.json")
